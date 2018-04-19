@@ -1,0 +1,22 @@
+{
+  "name": "ip-changer",
+  "version": "0.0.1",
+  "description": "IP Changer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/ShawnLin013/ip-changer",
+  "keywords": [
+    "ip",
+    "network"
+  ],
+  "author": "Shawn",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
