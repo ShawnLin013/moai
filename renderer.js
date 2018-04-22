@@ -1,5 +1,6 @@
 var exec = require('child-process-promise').exec;
 var os = require('os');
+var settings = require('electron-settings');
 
 function getInterfaces() {
   var result = [];

@@ -11,9 +11,12 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+const minWindowWidth = 800
+const minWindowHeight = 600
+
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({minWindowWidth, minWindowHeight})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -22,8 +25,14 @@ function createWindow () {
     slashes: true
   }))
 
+  // Set minimum size of the window
+  mainWindow.setMinimumSize(minWindowWidth, minWindowHeight);
+
+  // Hide menu
+  mainWindow.setMenu(null)
+
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
