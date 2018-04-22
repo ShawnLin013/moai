@@ -17,6 +17,7 @@
     "electron": "^1.8.4"
   },
   "dependencies": {
+    "child-process-promise": "^2.2.1",
     "jquery": "^3.3.1"
   }
 }
