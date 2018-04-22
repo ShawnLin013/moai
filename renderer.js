@@ -1,6 +1,7 @@
 var exec = require('child-process-promise').exec;
 var os = require('os');
 var settings = require('electron-settings');
+var netsh = "netsh interface ip";
 
 function getInterfaces() {
   var result = [];
@@ -20,31 +21,40 @@ function runExecs(cmds) {
   cmds.forEach(cmd => {
     promises.push(exec(cmd));
   });
-  Promise.all(promises).then(function (result) {
+  return Promise.all(promises).then(function (ressult) {
     console.log(result.stdout);
-  })
-  .catch(function (err) {
+  }).catch(function (err) {
     console.error(err.stdout);
   });
 }
 
-function setDHCP(name) {
+function setDHCP(index, iface) {
   var cmds = [
-    `netsh interface ip set address "${name}" dhcp`,
-    `netsh interface ip set dnsservers "${name}" dhcp`,
-    `netsh interface ip set winsservers "${name}" dhcp`
+    `${netsh} set address "${iface}" dhcp`,
+    `${netsh} set dnsservers "${iface}" dhcp`,
+    `${netsh} set winsservers "${iface}" dhcp`
   ]
-  runExecs(cmds);
+  runExecs(cmds).then(function () {
+    settings.set(index, { iface, dhcp: true });
+  }).catch(function () {
+  });
 }
 
-function setIP(name, ip, netmask, gateway, dns1, dns2) {
+function setIP(index, iface, ip, netmask, gateway, dns1, dns2) {
   var cmds = [
-    `netsh interface ip set address "${name}" static ${ip} ${netmask} ${gateway} 1`,
-    `netsh interface ip set dnsservers "${name}" static ${dns1}`,
-    `netsh interface ip add dnsservers "${name}" ${dns2}`
+    `${netsh} set address "${iface}" static ${ip} ${netmask} ${gateway} 1`,
+    `${netsh} set dnsservers "${iface}" static ${dns1}`,
+    `${netsh} add dnsservers "${iface}" ${dns2}`
   ]
-  runExecs(cmds);
+  runExecs(cmds).then(function () {
+    settings.set(index, { iface, dhcp: false, ip, netmask, gateway, dns1, dns2 })
+  }).catch(function () {
+  });
 }
 
-// setDHCP("乙太網路");
-// setIP("乙太網路", "192.168.1.2", "255.255.255.0", "192.168.1.254", "8.8.8.8", "1.1.1.1");
+$(function () {
+  console.log(getInterfaces());
+});
+
+// setDHCP(0, "乙太網路");
+// setIP(0, "乙太網路", "192.168.1.2", "255.255.255.0", "192.168.1.254", "8.8.8.8", "1.1.1.1");
