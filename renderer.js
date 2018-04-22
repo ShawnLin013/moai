@@ -53,7 +53,16 @@ function setIP(index, iface, ip, netmask, gateway, dns1, dns2) {
 }
 
 $(function () {
-  console.log(getInterfaces());
+  // Initial interfaces
+  let ifaces = getInterfaces();
+  for (let index = 0; index < ifaces.length; index++) {
+    let iface = ifaces[index];
+    let field = $('<div class="field"></div>');
+    let radio = $('<div class="ui radio checkbox"></div>');
+    radio.append('<input type="radio" ' + (index === 0? ' checked="checked"' : '') + '>');
+    radio.append('<label>' + iface + '</label>');
+    $("#interfaces").append(field.append(radio));
+  }
 });
 
 // setDHCP(0, "乙太網路");

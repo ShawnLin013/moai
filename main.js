@@ -16,7 +16,7 @@ const minWindowHeight = 600
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({minWindowWidth, minWindowHeight})
+  mainWindow = new BrowserWindow({minWindowWidth, minWindowHeight, frame: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -32,7 +32,7 @@ function createWindow () {
   mainWindow.setMenu(null)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

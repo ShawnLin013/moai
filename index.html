@@ -1,22 +1,165 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Moai</title>
 
-    <script>window.$ = window.jQuery = require('jquery');</script>
-    <script type="text/javascript" src="./renderer.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="./style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    <script>
-      require('./renderer.js')
-    </script>
-  </body>
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script type="text/javascript" src="renderer.js"></script>
+  <script type="text/javascript" src="semantic/semantic.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+  <title>Moai</title>
+</head>
+
+<body>
+  <div class="">
+    <div class="header__row ">
+      <h1 class="ui header brown">
+        <img class="ui middle aligned tiny image" src="./images/moai.png">
+        <div class="content">
+          Moai
+          <div class="sub header">A cross-platform application for changing your ip config.</div>
+        </div>
+      </h1>
+    </div>
+
+    <div class="container">
+      <div class="ui grid">
+        <div class="seven wide column">
+          <div class="ui form">
+            <div id="interfaces" class="grouped fields">
+              <h4 class="ui horizontal divider header blue">
+                <i class="tag icon"></i>
+                Interfaces
+              </h4>
+              <h3>Please choose your interfaces.</h3>
+            </div>
+          </div>
+        </div>
+        <div class="nine wide column">
+          <div>
+            <h4 class="ui horizontal divider header blue">
+              <i class="tag icon"></i>
+              Configs
+            </h4>
+            <div class="ui secondary pointing menu">
+              <div class="active item">Config 0</div>
+              <div class="item">Config 1</div>
+              <div class="item">Config 2</div>
+            </div>
+            <div class="ui bottom attached active tab segment">
+              <div class="ui form">
+                <div class="field">
+                  <label for="">Name</label>
+                  <div class="eight wide field">
+                    <input type="text" placeholder="Name">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>IP</label>
+                  <div class="fields">
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Netmask</label>
+                  <div class="fields">
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Gateway</label>
+                  <div class="fields">
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>DNS1</label>
+                  <div class="fields">
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>DNS2</label>
+                  <div class="fields">
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                    <div class="four wide field">
+                      <input type="number" maxlength="3" placeholder="">
+                    </div>
+                  </div>
+                </div>
+                <div class="ui toggle checkbox">
+                  <label>DHCP</label>
+                  <input type="checkbox" name="public">
+                </div>
+                <div class="ui right aligned grid">
+                  <div class="right floated wide column">
+                    <div class="ui submit button olive">Submit</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
