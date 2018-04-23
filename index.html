@@ -9,6 +9,7 @@
   <script>window.$ = window.jQuery = require('jquery');</script>
   <script type="text/javascript" src="renderer.js"></script>
   <script type="text/javascript" src="semantic/semantic.min.js"></script>
+  <script type="text/javascript" src="jquery.autotab.js"></script>
 
   <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
   <link rel="stylesheet" type="text/css" href="css/app.css" />
@@ -27,7 +28,6 @@
         </div>
       </h1>
     </div>
-
     <div class="container">
       <div class="ui grid">
         <div class="seven wide column">
@@ -37,7 +37,6 @@
                 <i class="tag icon"></i>
                 Interfaces
               </h4>
-              <h3>Please choose your interfaces.</h3>
             </div>
           </div>
         </div>
@@ -47,33 +46,36 @@
               <i class="tag icon"></i>
               Configs
             </h4>
-            <div class="ui secondary pointing menu">
-              <div class="active item">Config 0</div>
-              <div class="item">Config 1</div>
-              <div class="item">Config 2</div>
-            </div>
+            <div id="menu" class="ui secondary pointing menu"></div>
             <div class="ui bottom attached active tab segment">
               <div class="ui form">
                 <div class="field">
-                  <label for="">Name</label>
+                  <label>Name</label>
                   <div class="eight wide field">
-                    <input type="text" placeholder="Name">
+                    <input id="name" type="text" placeholder="Name" maxlength="10">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>DHCP</label>
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" name="dhcp">
+                    <label></label>
                   </div>
                 </div>
                 <div class="field">
                   <label>IP</label>
                   <div class="fields">
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                   </div>
                 </div>
@@ -81,16 +83,16 @@
                   <label>Netmask</label>
                   <div class="fields">
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                   </div>
                 </div>
@@ -98,16 +100,16 @@
                   <label>Gateway</label>
                   <div class="fields">
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                   </div>
                 </div>
@@ -115,16 +117,16 @@
                   <label>DNS1</label>
                   <div class="fields">
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                   </div>
                 </div>
@@ -132,26 +134,22 @@
                   <label>DNS2</label>
                   <div class="fields">
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                     <div class="four wide field">
-                      <input type="number" maxlength="3" placeholder="">
+                      <input type="text" class="ip">
                     </div>
                   </div>
                 </div>
-                <div class="ui toggle checkbox">
-                  <label>DHCP</label>
-                  <input type="checkbox" name="public">
-                </div>
                 <div class="ui right aligned grid">
                   <div class="right floated wide column">
-                    <div class="ui submit button olive">Submit</div>
+                    <div id="apply" class="ui submit button olive">Apply</div>
                   </div>
                 </div>
               </div>
