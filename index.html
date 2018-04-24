@@ -20,8 +20,8 @@
 <body>
   <div class="">
     <div class="header__row ">
-      <h1 class="ui header brown">
-        <img class="ui middle aligned tiny image" src="./images/moai.png">
+      <h1 class="ui header teal">
+        <img class="ui middle aligned image" src="./images/moai.png">
         <div class="content">
           Moai
           <div class="sub header">A cross-platform application for changing your ip config.</div>
@@ -30,128 +30,120 @@
     </div>
     <div class="container">
       <div class="ui grid">
-        <div class="seven wide column">
-          <div class="ui form">
-            <div class="grouped fields">
-              <h4 class="ui horizontal divider header blue">
-                <i class="tag icon"></i>
-                Interfaces
-              </h4>
-              <div id="interfaces"></div>
-            </div>
-          </div>
-        </div>
-        <div class="nine wide column">
-          <div>
-            <h4 class="ui horizontal divider header blue">
-              <i class="tag icon"></i>
-              Configs
-            </h4>
-            <div id="menu" class="ui secondary pointing menu"></div>
-            <div class="ui bottom attached active tab segment">
-              <div class="ui form">
-                <div class="field">
-                  <label>Name</label>
-                  <div class="eight wide field">
+        <div class="wide column">
+          <div id="menu" class="ui secondary pointing menu"></div>
+          <div class="ui bottom attached active tab segment">
+            <div class="ui form">
+              <div class="ui two column grid container">
+                <div class="column">
+                  <div class="wide field">
+                    <label>Name</label>
                     <input id="name" type="text" placeholder="Name" maxlength="10">
                   </div>
-                </div>
-                <div class="field">
-                  <label>DHCP</label>
-                  <div class="ui toggle checkbox">
-                    <input type="checkbox" name="dhcp">
-                    <label></label>
+                  <div class="wide field">
+                    <label>Adapter</label>
+                    <div id="interfaces"></div>
                   </div>
-                </div>
-                <div class="field">
-                  <label>IP</label>
-                  <div class="fields">
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
+                  <div class="wide field">
+                    <label>DHCP</label>
+                    <div class="ui toggle checkbox">
+                      <input type="checkbox" name="dhcp">
+                      <label></label>
                     </div>
                   </div>
                 </div>
-                <div class="field">
-                  <label>Netmask</label>
-                  <div class="fields">
-                    <div class="four wide field">
-                      <input type="text" class="ip">
+                <div class="column">
+                  <div class="field">
+                    <label>IP</label>
+                    <div class="four fields">
+                      <div class="field">
+                        <input type="text" class="ip ">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
                     </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
+                  </div>
+                  <div class="field">
+                    <label>Netmask</label>
+                    <div class="four fields">
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
                     </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
+                  </div>
+                  <div class="field">
+                    <label>Gateway</label>
+                    <div class="four fields">
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
                     </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
+                  </div>
+                  <div class="field">
+                    <label>DNS1</label>
+                    <div class="four fields">
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>DNS2</label>
+                    <div class="four fields">
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
+                      <div class="field">
+                        <input type="text" class="ip">
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="field">
-                  <label>Gateway</label>
-                  <div class="fields">
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                  </div>
-                </div>
-                <div class="field">
-                  <label>DNS1</label>
-                  <div class="fields">
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                  </div>
-                </div>
-                <div class="field">
-                  <label>DNS2</label>
-                  <div class="fields">
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                    <div class="four wide field">
-                      <input type="text" class="ip">
-                    </div>
-                  </div>
-                </div>
-                <div class="ui right aligned grid">
-                  <div class="right floated wide column">
-                    <div id="apply" class="ui submit button olive">Apply</div>
-                  </div>
+              </div>
+              <div class="ui right aligned grid">
+                <div class="right floated wide column">
+                  <div id="save" class="ui submit button teal">Save</div>
+                  <div id="apply" class="ui submit button teal">Apply</div>
                 </div>
               </div>
             </div>
@@ -161,4 +153,5 @@
     </div>
   </div>
 </body>
+
 </html>

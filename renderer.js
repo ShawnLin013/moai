@@ -34,6 +34,12 @@ function setConfig(configs) {
   settings.set('configs', configs);
 }
 
+function saveConfig(index, name, iface, dhcp, ip, netmask, gateway, dns1, dns2) {
+  configs[index] = { name, iface, dhcp, ip, netmask, gateway, dns1, dns2 };
+  setConfig(configs);
+  initMenu();
+}
+
 function setDHCP(index, name, iface) {
   var cmds = [
     `${netsh} set address "${iface}" dhcp`,
@@ -41,9 +47,7 @@ function setDHCP(index, name, iface) {
     `${netsh} set winsservers "${iface}" dhcp`
   ]
   return runExecs(cmds).then(function () {
-    configs[index] = { name, iface, dhcp: true, ip: '', netmask: '', gateway: '', dns1: '', dns2:'' };
-    setConfig(configs);
-    initMenu();
+    saveConfig(index, name, iface, true, '', '', '', '', '');
   }).catch(function () {
     return Promise.resolve();
   });
@@ -56,9 +60,7 @@ function setIP(index, name, iface, ip, netmask, gateway, dns1, dns2) {
     `${netsh} add dnsservers "${iface}" ${dns2}`
   ]
   return runExecs(cmds).then(function () {
-    configs[index] = { name, iface, dhcp: false, ip, netmask, gateway, dns1, dns2 };
-    setConfig(configs);
-    initMenu();
+    saveConfig(index, name, iface, false, ip, netmask, gateway, dns1, dns2);
   }).catch(function () {
     return Promise.resolve();
   });
@@ -113,9 +115,9 @@ function initMenu() {
       currentTab = index;
 
       $(this)
-        .addClass('active')
+        .addClass('active teal')
         .siblings()
-        .removeClass('active');
+        .removeClass('active teal');
 
       $('#name').val(config.name);
       $('input[name="dhcp"]').prop('checked', config.dhcp);
@@ -134,6 +136,11 @@ function initMenu() {
 
       $('.ip').each(function (i) {
         $(this).val(ips[i]);
+        if (config.dhcp) {
+          $(this).parent().addClass('disabled');
+        } else {
+          $(this).parent().removeClass('disabled');
+        }
       });
     });
     $('#menu').append(item);
@@ -145,6 +152,26 @@ function toggleApply() {
   $('#apply').toggleClass('loading');
 }
 
+function getConfig() {
+  let name = $('#name').val();
+  let iface = $('input[name="interface-checkbox"]').filter(':checked').next().text();
+  let dhcp = $('input[name="dhcp"]').is(':checked');
+
+  let ips = [];
+  $('.ip').each(function () {
+    ips.push($(this).val());
+  });
+  let ip      = `${ips[ 0]}.${ips[ 1]}.${ips[ 2]}.${ips[ 3]}`;
+  let netmask = `${ips[ 4]}.${ips[ 5]}.${ips[ 6]}.${ips[ 7]}`;
+  let gateway = `${ips[ 8]}.${ips[ 9]}.${ips[10]}.${ips[11]}`;
+  let dns1    = `${ips[12]}.${ips[13]}.${ips[14]}.${ips[15]}`;
+  let dns2    = `${ips[16]}.${ips[17]}.${ips[18]}.${ips[19]}`;
+
+  let config = { name, iface, dhcp, ip, netmask, gateway, dns1, dns2 };
+  console.log(config);
+  return config;
+}
+
 $(function () {
   // Initial configs
   initConfigs();
@@ -152,39 +179,30 @@ $(function () {
   initMenu();
   // Initial ip inputs
   $('.ip').autotab({ format: 'number', maxlength: 3 });
+  // Initial dhcp
+  $('input[name="dhcp"]').on('change', function () {
+    let disabled = $(this).is(':checked');
+    $('.ip').each(function () {
+      $(this).parent().toggleClass('disabled');
+    });
+  });
+
+  $('#save').on('click', function () {
+    let config = getConfig();
+    saveConfig(currentTab, config.name, config.iface, config.dhcp, config.ip, config.netmask, config.gateway, config.dns1, config.dns2);
+  });
 
   $('#apply').on('click', function () {
     toggleApply();
 
-    let iface = $('input[name="interface-checkbox"]').filter(':checked').next().text();
-    let name = $('#name').val();
-    let dhcp = $('input[name="dhcp"]').is(':checked');
-
-    let ips = [];
-    $('.ip').each(function () {
-      ips.push($(this).val());
-    });
-    let ip      = `${ips[ 0]}.${ips[ 1]}.${ips[ 2]}.${ips[ 3]}`;
-    let netmask = `${ips[ 4]}.${ips[ 5]}.${ips[ 6]}.${ips[ 7]}`;
-    let gateway = `${ips[ 8]}.${ips[ 9]}.${ips[10]}.${ips[11]}`;
-    let dns1    = `${ips[12]}.${ips[13]}.${ips[14]}.${ips[15]}`;
-    let dns2    = `${ips[16]}.${ips[17]}.${ips[18]}.${ips[19]}`;
-
-    console.log('iface:', iface);
-    console.log('name:', name);
-    console.log('dhcp:', dhcp);
-    console.log('ip:', ip);
-    console.log('netmask:', netmask);
-    console.log('gateway:', gateway);
-    console.log('dns1:', dns1);
-    console.log('dns2:', dns2);
+    let config = getConfig();
 
     setTimeout(function () {
-      if (dhcp) {
-        setDHCP(currentTab, name, iface)
+      if (config.dhcp) {
+        setDHCP(currentTab, config.name, config.iface)
           .then(function() { toggleApply(); });
       } else {
-        setIP(currentTab, name, iface, ip, netmask, gateway, dns1, dns2)
+        setIP(currentTab, config.name, config.iface, config.ip, config.netmask, config.gateway, config.dns1, config.dns2)
           .then(function() { toggleApply(); });
       }
     }, 500);
