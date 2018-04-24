@@ -40,10 +40,12 @@ function setDHCP(index, name, iface) {
     `${netsh} set dnsservers "${iface}" dhcp`,
     `${netsh} set winsservers "${iface}" dhcp`
   ]
-  runExecs(cmds).then(function () {
+  return runExecs(cmds).then(function () {
     configs[index] = { name, iface, dhcp: true, ip: '', netmask: '', gateway: '', dns1: '', dns2:'' };
     setConfig(configs);
+    initMenu();
   }).catch(function () {
+    return Promise.resolve();
   });
 }
 
@@ -53,10 +55,12 @@ function setIP(index, name, iface, ip, netmask, gateway, dns1, dns2) {
     `${netsh} set dnsservers "${iface}" static ${dns1}`,
     `${netsh} add dnsservers "${iface}" ${dns2}`
   ]
-  runExecs(cmds).then(function () {
+  return runExecs(cmds).then(function () {
     configs[index] = { name, iface, dhcp: false, ip, netmask, gateway, dns1, dns2 };
     setConfig(configs);
+    initMenu();
   }).catch(function () {
+    return Promise.resolve();
   });
 }
 
@@ -80,8 +84,28 @@ function initIP(ips, configIP, startIndex) {
   }
 }
 
+function initInterfaces(currentInterface) {
+  $('#interfaces').empty();
+
+  let ifaces = getInterfaces();
+  let ifaceIndex = ifaces.indexOf(currentInterface);
+  if (ifaceIndex === -1) {
+    ifaceIndex = 0;
+  }
+
+  for (let index = 0; index < ifaces.length; index++) {
+    let iface = ifaces[index];
+    let field = $('<div class="field"></div>');
+    let radio = $('<div class="ui radio checkbox"></div>');
+    radio.append('<input type="radio" name="interface-checkbox" ' + (index === ifaceIndex ? ' checked="checked"' : '') + '>');
+    radio.append('<label>' + iface + '</label>');
+    $('#interfaces').append(field.append(radio));
+  }
+}
+
 function initMenu() {
   $('#menu').empty();
+
   for (let index = 0; index < configs.length; index++) {
     let config = configs[index];
     var item = $('<a class="' + (index === 0 ? 'active ' : '') + 'item">' + config.name + '</a>');
@@ -95,7 +119,7 @@ function initMenu() {
 
       $('#name').val(config.name);
       $('input[name="dhcp"]').prop('checked', config.dhcp);
-      // TODO: iface
+      initInterfaces(config.iface);
 
       let ips = [];
       for (let j = 0; j < 20; j++) {
@@ -117,16 +141,8 @@ function initMenu() {
   $('.item').get(currentTab).click();
 }
 
-function initInterfaces() {
-  let ifaces = getInterfaces();
-  for (let index = 0; index < ifaces.length; index++) {
-    let iface = ifaces[index];
-    let field = $('<div class="field"></div>');
-    let radio = $('<div class="ui radio checkbox"></div>');
-    radio.append('<input type="radio" name="interface-checkbox" ' + (index === 0 ? ' checked="checked"' : '') + '>');
-    radio.append('<label>' + iface + '</label>');
-    $('#interfaces').append(field.append(radio));
-  }
+function toggleApply() {
+  $('#apply').toggleClass('loading');
 }
 
 $(function () {
@@ -134,12 +150,12 @@ $(function () {
   initConfigs();
   // Initial menu
   initMenu();
-  // Initial interfaces
-  initInterfaces();
   // Initial ip inputs
   $('.ip').autotab({ format: 'number', maxlength: 3 });
 
   $('#apply').on('click', function () {
+    toggleApply();
+
     let iface = $('input[name="interface-checkbox"]').filter(':checked').next().text();
     let name = $('#name').val();
     let dhcp = $('input[name="dhcp"]').is(':checked');
@@ -154,20 +170,24 @@ $(function () {
     let dns1    = `${ips[12]}.${ips[13]}.${ips[14]}.${ips[15]}`;
     let dns2    = `${ips[16]}.${ips[17]}.${ips[18]}.${ips[19]}`;
 
-    console.log('iface', iface);
-    console.log('name', name);
-    console.log('dhcp', dhcp);
-    console.log('ip', ip);
-    console.log('netmask', netmask);
-    console.log('gateway', gateway);
-    console.log('dns1', dns1);
-    console.log('dns2', dns2);
+    console.log('iface:', iface);
+    console.log('name:', name);
+    console.log('dhcp:', dhcp);
+    console.log('ip:', ip);
+    console.log('netmask:', netmask);
+    console.log('gateway:', gateway);
+    console.log('dns1:', dns1);
+    console.log('dns2:', dns2);
 
-    if (dhcp) {
-      setDHCP(currentTab, name, iface);
-    } else {
-      setIP(currentTab, name, iface, ip, netmask, gateway, dns1, dns2);
-    }
+    setTimeout(function () {
+      if (dhcp) {
+        setDHCP(currentTab, name, iface)
+          .then(function() { toggleApply(); });
+      } else {
+        setIP(currentTab, name, iface, ip, netmask, gateway, dns1, dns2)
+          .then(function() { toggleApply(); });
+      }
+    }, 500);
   });
 });
 
