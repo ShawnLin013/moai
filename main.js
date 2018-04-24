@@ -12,11 +12,14 @@ const url = require('url')
 let mainWindow
 
 const minWindowWidth = 800
-const minWindowHeight = 600
+const minWindowHeight = 680
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({minWindowWidth, minWindowHeight})
+  mainWindow = new BrowserWindow({
+    width: minWindowWidth,
+    height: minWindowHeight
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -26,13 +29,14 @@ function createWindow () {
   }))
 
   // Set minimum size of the window
-  mainWindow.setMinimumSize(minWindowWidth, minWindowHeight);
+  mainWindow.setMinimumSize(minWindowWidth, minWindowHeight)
+  mainWindow.setResizable(false)
 
   // Hide menu
   mainWindow.setMenu(null)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
