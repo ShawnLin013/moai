@@ -4,7 +4,11 @@
   "description": "A cross-platform application for changing your ip config.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-win32": "electron-packager . --platform=win32 --arch=ia32 --overwrite --prune --icon=images/icon.ico --ignore=app/src --out=build",
+    "build-win64": "electron-packager . --platform=win32 --arch=x64 --overwrite --prune --icon=images/icon.ico --ignore=app/src --out=build",
+    "build-mac": "electron-packager . --platform=darwin --arch=x64 --overwrite --prune --icon=images/icon.icns --ignore=app/src --out=build && electron-installer-dmg ./build/moai-darwin-x64/Moai.app Moai --out=out --overwrite --icon=images/icon.icns",
+    "build-linux": "electron-packager . --platform=linux --arch=x64 --overwrite --prune --icon=images/icon.png --ignore=app/src --out=build"
   },
   "repository": "https://github.com/ShawnLin013/moai",
   "keywords": [
@@ -14,7 +18,9 @@
   "author": "Shawn",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.8.4",
+    "electron-packager": "^12.0.1",
+    "electron-winstaller": "^2.6.4"
   },
   "dependencies": {
     "child-process-promise": "^2.2.1",
