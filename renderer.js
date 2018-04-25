@@ -21,12 +21,15 @@ function getInterfaces() {
 function runExecs(cmds) {
   var promises = [];
   cmds.forEach(cmd => {
-    promises.push(exec(cmd));
+    promises.push(exec("chcp 65001 | " + cmd));
   });
-  return Promise.all(promises).then(function (ressult) {
+  return Promise.all(promises).then(function (result) {
     console.log(result.stdout);
   }).catch(function (err) {
     console.error(err.stdout);
+    $('#error-header').text('Error');
+    $('#error-content').text(err.stdout);
+    $('.basic.modal').modal('show');
   });
 }
 
@@ -79,10 +82,11 @@ function initConfigs() {
 
 function initIP(ips, configIP, startIndex) {
   let ip = configIP.split('.');
-  if (ip.length == 4) {
-    for (let j = startIndex; j < startIndex + 4; j++) {
-      ips[j] = ip[j];
-    }
+  if (ip.length != 4) {
+    return;
+  }
+  for (let j = 0; j < 4; j++) {
+    ips[j + startIndex] = ip[j];
   }
 }
 

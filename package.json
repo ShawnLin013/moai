@@ -1,5 +1,6 @@
 {
   "name": "moai",
+  "productName": "Moai",
   "version": "0.0.1",
   "description": "A cross-platform application for changing your ip config.",
   "main": "main.js",

@@ -12,13 +12,15 @@ const url = require('url')
 let mainWindow
 
 const minWindowWidth = 800
-const minWindowHeight = 680
+const minWindowHeight = 700
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: minWindowWidth,
-    height: minWindowHeight
+    height: minWindowHeight,
+    minWidth: minWindowWidth,
+    minHeight: minWindowHeight
   })
 
   // and load the index.html of the app.
@@ -27,10 +29,6 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-
-  // Set minimum size of the window
-  mainWindow.setMinimumSize(minWindowWidth, minWindowHeight)
-  mainWindow.setResizable(false)
 
   // Hide menu
   mainWindow.setMenu(null)
