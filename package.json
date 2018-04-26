@@ -1,27 +1,30 @@
 {
   "name": "moai",
   "productName": "MOAI",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A cross-platform application for changing your ip config.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-win32": "electron-packager . --platform=win32 --arch=ia32 --overwrite --prune --icon=images/icon.ico --ignore=app/src --out=build",
-    "build-win64": "electron-packager . --platform=win32 --arch=x64 --overwrite --prune --icon=images/icon.ico --ignore=app/src --out=build",
-    "build-mac": "electron-packager . --platform=darwin --arch=x64 --overwrite --prune --icon=images/icon.icns --ignore=app/src --out=build && electron-installer-dmg ./build/MOAI-darwin-x64/MOAI.app MOAI --out=out --overwrite --icon=images/icon.icns",
-    "build-linux": "electron-packager . --platform=linux --arch=x64 --overwrite --prune --icon=images/icon.png --ignore=app/src --out=build"
+    "build-win32": "electron-packager . --platform=win32 --arch=ia32 --overwrite --prune --icon=images/icon.ico --out=build",
+    "build-win64": "electron-packager . --platform=win32 --arch=x64 --overwrite --prune --icon=images/icon.ico --out=build",
+    "build-mac": "electron-packager . --platform=darwin --arch=x64 --overwrite --prune --icon=images/icon.icns --out=build && electron-installer-dmg ./build/MOAI-darwin-x64/MOAI.app MOAI --out=out --overwrite --icon=images/icon.icns",
+    "build-linux": "electron-packager . --platform=linux --arch=x64 --overwrite --prune --icon=images/icon.png --out=build"
   },
   "repository": "https://github.com/ShawnLin013/moai",
   "keywords": [
     "ip",
     "network"
   ],
-  "author": "Shawn",
+  "author": "ShawnLin013",
   "license": "MIT",
+  "win32metadata": {
+    "requested-execution-level": "requireAdministrator"
+  },
   "devDependencies": {
     "electron": "^1.8.4",
     "electron-packager": "^12.0.1",
-    "electron-winstaller": "^2.6.4"
+    "electron-wix-msi": "^1.3.0"
   },
   "dependencies": {
     "child-process-promise": "^2.2.1",
