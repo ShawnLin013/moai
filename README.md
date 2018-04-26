@@ -8,7 +8,7 @@
 
 A cross-platform application for changing your ip config.
 
-![](https://github.com/ShawnLin013/moai/blob/master/images/preview.gif)
+![](https://github.com/ShawnLin013/moai/blob/master/images/preview.png)
 
 ## Installation
 
